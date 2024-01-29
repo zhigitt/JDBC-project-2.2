@@ -53,7 +53,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void dropTable() {
         String query = """ 
-                        drop table if not exists employees;
+                        drop table employees;
                         """;
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
@@ -67,11 +67,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void cleanTable() {
         String query = """
-                drop table if not exists employees;
+                truncate table employees;
                 """;
 
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
+            System.out.println("cleaned table");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -80,7 +81,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     @Override
     public void updateEmployee(Long id, Employee employee) {
         String query = """
-                update employees set first_name = ?, last_name = ?, age = ?, email = ?;
+                update employees set first_name = ?, last_name = ?, age = ?, email = ? where id = ?;
                 """;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -89,7 +90,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
             preparedStatement.setString(2, employee.getLastName());
             preparedStatement.setInt(3, employee.getAge());
             preparedStatement.setString(4, employee.getEmail());
+            preparedStatement.setInt(5, employee.getJobId());
             preparedStatement.executeUpdate();
+
+            System.out.println("updated");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -205,6 +209,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 employee.setAge(resultSet.getInt("age"));
                 employee.setEmail(resultSet.getString("email"));
                 employee.setJobId(resultSet.getInt("job_id"));
+
+                employees.add(employee);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

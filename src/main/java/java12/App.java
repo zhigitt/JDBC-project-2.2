@@ -19,33 +19,28 @@ public class App
         JobService jobService = new JobImpl();
         EmployeeService employeeService = new EmployeeImpl();
 
-        //Connected
-//        JdbcConfig.getConnection();
-
-        //Create table
-//        jobService.createJobTable();
+//        Employee
 //        employeeService.createEmployee();
-
-        //Add
-//        jobService.addJob(new Job("Mentor", "Java", "Backend developer", 1));
-//        jobService.addJob(new Job("Management", "JavaScript", "Fronted developer", 3));
-//        jobService.addJob(new Job("Instructor", "JavaScript", "Backend developer", 5));
-
 //        employeeService.addEmployee(new Employee("Mirlan", "Arstanbekov", 20, "mirlan@gmail.com", 1));
-//        employeeService.addEmployee(new Employee("Aliaskar", "Temirbekov", 20, "ali@gmail.com", 2));
-//        employeeService.addEmployee(new Employee("Nurgazy", "Temiraliev", 20, "nur@gmail.com", 3));
-
-
-        //Get by id
-//        System.out.println(jobService.getJobByEmployeeId(1L));
+//        employeeService.addEmployee(new Employee("Aliaskar", "Temirbekov", 20, "ali@gmail.com", 1));
+//        employeeService.addEmployee(new Employee("Nurgazy", "Temiraliev", 20, "nur@gmail.com", 1));
 //        System.out.println(employeeService.getEmployeeById(1L));
-//        System.out.println(jobService.getJobById(1L));
 //        System.out.println(employeeService.getAllEmployees());
-
-
 //        System.out.println(employeeService.getEmployeeByPosition("Mentor"));
+//        System.out.println(employeeService.findByEmail("nuke@gmail.com"));
+//        employeeService.updateEmployee(1L, new Employee("Nuk", "Muk", 29, "n@gmail.com", 1));
+//        employeeService.cleanTable();
 
-        //
+//        employeeService.dropTable();
 
+
+        //JOBs
+//        jobService.createJobTable();
+//        jobService.addJob(new Job("Instructor", "C", "back", 3));
+//        jobService.addJob(new Job("Mentor", "C", "front", 3));
+//        System.out.println(jobService.getJobByEmployeeId(9L));
+//        System.out.println(jobService.getJobById(1L));
+//        System.out.println(jobService.sortByExperience("asc"));
+//        jobService.deleteDescriptionColumn();
     }
 }

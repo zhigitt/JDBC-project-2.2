@@ -32,11 +32,11 @@ public class JobDaoImpl implements JobDao {
 
             execute = statement.executeUpdate(query);
             statement.close();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(execute != 0 ? "Error": "Created table");
+        System.out.println(execute != 0 ? "Error" : "Created table");
 
     }
 
@@ -59,7 +59,7 @@ public class JobDaoImpl implements JobDao {
             preparedStatement.executeUpdate();
             preparedStatement.close();
             System.out.println("Saved");
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -86,7 +86,7 @@ public class JobDaoImpl implements JobDao {
                 preparedStatement.close();
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return job;
@@ -96,26 +96,29 @@ public class JobDaoImpl implements JobDao {
     public List<Job> sortByExperience(String ascOrDesc) {
 
         List<Job> jobs = new ArrayList<>();
-        String query = """
-                select * from jobs order by experience asc;
-                """;
+        if (ascOrDesc.equals("asc") || ascOrDesc.equals("desc")) {
+            String query = """
+                    select * from jobs order by experience 
+                    """ + ascOrDesc;
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)){
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()){
-                Job job = new Job();
-                job.setId(resultSet.getLong("id"));
-                job.setPosition(resultSet.getString("position"));
-                job.setProfession(resultSet.getString("profession"));
-                job.setDescription(resultSet.getString("description"));
-                job.setExperience(resultSet.getInt("experience"));
+                while (resultSet.next()) {
+                    Job job = new Job();
+                    job.setId(resultSet.getLong("id"));
+                    job.setPosition(resultSet.getString("position"));
+                    job.setProfession(resultSet.getString("profession"));
+                    job.setDescription(resultSet.getString("description"));
+                    job.setExperience(resultSet.getInt("experience"));
 
-                jobs.add(job);
+                    jobs.add(job);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
             }
-
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
+        } else {
+            System.out.println("Error!");
         }
         return jobs;
     }
@@ -143,7 +146,7 @@ public class JobDaoImpl implements JobDao {
                 job.setExperience(resultSet.getInt("experience"));
 
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return job;
@@ -155,11 +158,11 @@ public class JobDaoImpl implements JobDao {
                 alter table jobs drop column description;
                 """;
 
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
             System.out.println("Deleted");
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
